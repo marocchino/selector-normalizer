@@ -1,0 +1,29 @@
+{
+  "name": "selector-normalizer",
+  "version": "0.0.1",
+  "description": "scripts that normalize selector to kebab case",
+  "keywords": [
+    "postcss",
+    "parse5",
+    "vue",
+    "html",
+    "css",
+    "kebab",
+    "selector"
+  ],
+  "author": "Shim Won <marocchino@gmail.com>",
+  "license": "MIT",
+  "repository": "marocchino/selector-normalizer",
+  "bugs": {
+    "url": "https://github.com/marocchino/selector-normalizer/issues"
+  },
+  "homepage": "https://github.com/marocchino/selector-normalizer",
+  "dependencies": {
+    "parse5": "^3.0.2",
+    "postcss": "^5.2.16",
+    "postcss-kebab-case-selector": "^0.0.1"
+  },
+  "scripts": {
+    "html": "node html-kebab.js"
+  }
+}
