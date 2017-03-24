@@ -1,5 +1,7 @@
 const parse5 = require('parse5')
 const fs = require('fs')
+const kebab = require('postcss-kebab-case-selector')
+const postcss = require('postcss')
 
 const changeKebab = (str) => str
   .replace(/[A-Z]+/g, c => `-${c.toLowerCase()}`)
@@ -9,7 +11,7 @@ const changeKebab = (str) => str
   .replace(/-(\d)/g, '$1')
 
 const replaceStyle = text => {
-  text.value = ""
+  text.value = postcss([kebab]).process(text.value).toString()
   return text
 }
 
@@ -22,8 +24,14 @@ const recursiveReplace = (node) => {
       return { name, value }
     })
   }
+  if (node.nodeName === 'style') {
+    node.childNodes[0] = replaceStyle(node.childNodes[0])
+  }
   if (node.childNodes) {
     node.childNodes = node.childNodes.map(recursiveReplace)
+  }
+  if (node.content) {
+    node.content = recursiveReplace(node.content)
   }
   return node
 }
@@ -33,7 +41,9 @@ const replaceHtml = srcPath => {
     if (err) {
       return
     }
-    let document = parse5.parse(data)
+    const parse =
+      srcPath.match(/\.html$/) ? parse5.parse : parse5.parseFragment
+    let document = parse(data)
     document = recursiveReplace(document)
     const html = parse5.serialize(document)
     fs.writeFile(srcPath, html, err => {
