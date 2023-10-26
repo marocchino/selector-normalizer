@@ -20,7 +20,7 @@
   "homepage": "https://github.com/marocchino/selector-normalizer",
   "dependencies": {
     "parse5": "^3.0.2",
-    "postcss": "^5.2.16",
+    "postcss": "^8.4.31",
     "postcss-kebab-case-selector": "^0.0.1"
   },
   "scripts": {
